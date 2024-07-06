@@ -1,0 +1,12 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Service for keeping track of your workouts.",
+        "title": "Workout Tracker",
+        "contact": {},
+        "version": "0.0.0"
+    },
+    "host": "localhost:8888",
+    "basePath": "/",
+    "paths": {}
+}

@@ -1,0 +1,50 @@
+services:
+  backend:
+    build:
+      ./backend
+    ports:
+      - '8888:8888'
+    networks:
+      - my-network
+#    depends_on:
+#      - postgres
+    restart: always
+
+
+  frontend:
+    build:
+      ./frontend
+    ports:
+      - '3333:3333'
+    networks:
+      - my-network
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
+    restart: always
+
+#  postgres:
+#    image: postgres:alpine
+#    environment:
+#      POSTGRES_USER: user
+#      POSTGRES_PASSWORD: password
+#      POSTGRES_DB: movies
+#    ports:
+#      - '5432:5432' # remove before deployment
+#    networks:
+#      - my-network
+#    logging:
+#      options:
+#        max-size: '10m'
+#        max-file: '3'
+#    volumes:
+#      - ./postgres-data:/var/lib/postgresql/data
+#      - ./postgres/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+#    restart: always
+
+volumes:
+  postgres-data:
+
+networks:
+  my-network:
+    driver: bridge
