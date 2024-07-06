@@ -24,7 +24,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "Workout Tracker",
-	Description:      "Service for keeping track of your workouts.",
+	Description:      "Service for keeping track of your training progress.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

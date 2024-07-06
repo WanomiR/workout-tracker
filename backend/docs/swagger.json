@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "Service for keeping track of your workouts.",
+        "description": "Service for keeping track of your training progress.",
         "title": "Workout Tracker",
         "contact": {},
         "version": "0.0.0"
