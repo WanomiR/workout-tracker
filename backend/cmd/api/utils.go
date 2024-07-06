@@ -3,13 +3,14 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	"golang.org/x/crypto/bcrypt"
 	"io"
 	"net/http"
 )
 
 type JSONResponse struct {
-	Error   bool   `json:"error"`
-	Message string `json:"message"`
+	Error   bool   `json:"error" binding:"required"`
+	Message string `json:"message" binding:"required"`
 	Data    any    `json:"data,omitempty"` // any is an alias for interface{}
 }
 
@@ -56,4 +57,15 @@ func writeJSONError(w http.ResponseWriter, err error, status ...int) {
 	payload.Message = err.Error()
 
 	writeJSONResponse(w, statusCode, payload)
+}
+
+func passwordMatches(hash, password string) (bool, error) {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	if err != nil {
+		if errors.Is(err, bcrypt.ErrMismatchedHashAndPassword) {
+			return false, nil
+		}
+		return false, err
+	}
+	return true, nil
 }

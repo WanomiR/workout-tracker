@@ -22,7 +22,6 @@ type App struct {
 // @version 0.0.0
 // @description Service for keeping track of your training progress.
 
-// @host localhost:8888
 // @BasePath /
 func main() {
 	err := godotenv.Load()

@@ -8,11 +8,11 @@ CREATE TABLE public.users
     surname       VARCHAR(255),
     weight        REAL,
     height        REAL,
-    age           INTEGER,
+    dob           DATE,
     registered_at TIMESTAMP WITHOUT TIME ZONE
 );
 
-INSERT INTO public.users (email, password, name, patronymic, surname, weight, height, age, registered_at)
+INSERT INTO public.users (email, password, name, patronymic, surname, weight, height, dob, registered_at)
 VALUES ('admin@example.com', '$2a$10$aao6Yk/9XpdbpON377Xikui50JAeaoZQg.emqV54Ym9s56fF6KS7a', 'User', '', 'Admin', 104.5,
-        196.7, 29, now())
+        196.7, '1995-01-21', now())
 ;

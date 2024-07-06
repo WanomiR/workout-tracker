@@ -1,9 +1,64 @@
 basePath: /
-host: localhost:8888
+definitions:
+  main.JSONResponse:
+    properties:
+      data:
+        description: any is an alias for interface{}
+      error:
+        type: boolean
+      message:
+        type: string
+    required:
+    - error
+    - message
+    type: object
+  models.UserCredentials:
+    properties:
+      email:
+        example: admin@example.com
+        type: string
+      password:
+        description: internally is stored as hash
+        example: password
+        type: string
+    required:
+    - email
+    - password
+    type: object
 info:
   contact: {}
   description: Service for keeping track of your training progress.
   title: Workout Tracker
   version: 0.0.0
-paths: {}
+paths:
+  /authenticate:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user by email address and password.
+      parameters:
+      - description: User credentials
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserCredentials'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+      summary: authenticate user
+      tags:
+      - auth
 swagger: "2.0"
