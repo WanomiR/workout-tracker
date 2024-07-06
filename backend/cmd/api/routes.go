@@ -15,8 +15,8 @@ func (app *App) Routes() http.Handler {
 
 	mux.Post("/authenticate", app.Authenticate)
 	mux.Post("/register", nil)
-	mux.Get("/refresh", nil)
-	mux.Get("/logout", nil)
+	mux.Get("/refresh", app.RefreshToken)
+	mux.Get("/logout", app.Logout)
 
 	mux.Get("/", app.Home)
 

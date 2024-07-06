@@ -43,7 +43,7 @@ func main() {
 		RefreshExpiry: 24 * time.Minute,
 		CookiePath:    "/",
 		CookieName:    "__Host-refresh_token",
-		CookieDomain:  app.Domain,
+		CookieDomain:  "localhost", // temporary domain to avoid errors
 	}
 
 	conn, err := app.connectToDb()

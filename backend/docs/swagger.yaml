@@ -61,4 +61,38 @@ paths:
       summary: authenticate user
       tags:
       - auth
+  /logout:
+    get:
+      description: Logout and remove refresh token from cookie storage.
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+      summary: logout
+      tags:
+      - auth
+  /refresh:
+    get:
+      description: Refresh JWT token.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+      summary: refresh jwt token
+      tags:
+      - auth
 swagger: "2.0"

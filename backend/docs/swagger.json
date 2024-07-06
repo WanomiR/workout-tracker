@@ -53,6 +53,58 @@
                     }
                 }
             }
+        },
+        "/logout": {
+            "get": {
+                "description": "Logout and remove refresh token from cookie storage.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "logout",
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/main.JSONResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/refresh": {
+            "get": {
+                "description": "Refresh JWT token.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "refresh jwt token",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.JSONResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/main.JSONResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/main.JSONResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
