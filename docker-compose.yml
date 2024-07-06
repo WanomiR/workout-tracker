@@ -23,24 +23,24 @@ services:
       - ./frontend:/app
     restart: always
 
-#  postgres:
-#    image: postgres:alpine
-#    environment:
-#      POSTGRES_USER: user
-#      POSTGRES_PASSWORD: password
-#      POSTGRES_DB: movies
-#    ports:
-#      - '5432:5432' # remove before deployment
-#    networks:
-#      - my-network
-#    logging:
-#      options:
-#        max-size: '10m'
-#        max-file: '3'
-#    volumes:
-#      - ./postgres-data:/var/lib/postgresql/data
-#      - ./postgres/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
-#    restart: always
+  postgres:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: tracker
+    ports:
+      - '5432:5432' # remove before deployment
+    networks:
+      - my-network
+    logging:
+      options:
+        max-size: '10m'
+        max-file: '3'
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+      - ./postgres/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+    restart: always
 
 volumes:
   postgres-data:
