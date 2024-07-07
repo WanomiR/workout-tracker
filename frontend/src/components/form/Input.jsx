@@ -16,6 +16,9 @@ const Input = forwardRef((props, ref) => {
                 onChange={props.onChange}
                 autoComplete={props.autoComplete}
                 value={props.value}
+                min={props.min}
+                max={props.max}
+                step={props.step}
                 required={props.required}
             />
             <div className={props.errorDiv}>{props.errorMsg}</div>

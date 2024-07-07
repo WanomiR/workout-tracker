@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate, useOutletContext} from "react-router-dom";
 import Input from "/src/components/form/Input";
 import apiBase from "/src/index.jsx";
@@ -6,7 +6,7 @@ import apiBase from "/src/index.jsx";
 const Login = () => {
 
 	const [credentials, setCredentials] = useState({email: "", password: ""})
-	const {setJwtToken, setAlertInfo, toggleRefresh} = useOutletContext()
+	const {jwtToken, setJwtToken, setAlertInfo, toggleRefresh} = useOutletContext()
 
 	const navigate = useNavigate();
 
@@ -18,11 +18,9 @@ const Login = () => {
 			password: credentials.password,
 		}
 
-		const headers = new Headers({'Content-Type': 'application/json'})
-
 		const requestOptions = {
 			method: "POST",
-			headers: headers,
+			headers: {'Content-Type': 'application/json'},
 			credentials: "include",
 			body: JSON.stringify(payload),
 		}
@@ -43,6 +41,12 @@ const Login = () => {
 		}
 	}
 
+	useEffect(() => {
+		if (jwtToken !== "") {
+			navigate("/")
+		}
+	});
+
 	return (
 		<div className="container">
 			<div className="row">
@@ -52,13 +56,13 @@ const Login = () => {
 						<Input
 							title={"Email"}
 							type={"email"}
-							className={"form-control"}
 							name={"email"}
 							autoComplete="email-new"
 							onChange={(e) => setCredentials({...credentials, email: e.target.value})}
 							// TODO: change placeholder CSS
 							placeholder={"admin@example.com"}
 							required={true}
+							className={"form-control"}
 						/>
 						<Input
 							title={"Password"}
