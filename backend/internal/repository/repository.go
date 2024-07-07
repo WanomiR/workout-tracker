@@ -8,4 +8,5 @@ import (
 type DatabaseRepo interface {
 	Connection() *sql.DB
 	GetUserByEmail(string) (*models.User, error)
+	InsertUser(models.User) (int, error)
 }

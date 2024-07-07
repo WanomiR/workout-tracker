@@ -14,7 +14,7 @@ func (app *App) Routes() http.Handler {
 	mux.Use(app.enableCORS)
 
 	mux.Post("/authenticate", app.Authenticate)
-	mux.Post("/register", nil)
+	mux.Post("/register", app.RegisterUser)
 	mux.Get("/refresh", app.RefreshToken)
 	mux.Get("/logout", app.Logout)
 

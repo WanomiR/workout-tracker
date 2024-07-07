@@ -157,3 +157,46 @@ func (app *App) Logout(w http.ResponseWriter, r *http.Request) {
 
 	writeJSONResponse(w, http.StatusAccepted, resp)
 }
+
+// RegisterUser godoc
+// @Summary register user
+// @Description Register new user.
+// @Tags user
+// @Accept json
+// @Produce json
+// @Param input body models.User true "user data"
+// @Success 201 {object} JSONResponse
+// @Failure 400,500 {object} JSONResponse
+// @Router /register [post]
+func (app *App) RegisterUser(w http.ResponseWriter, r *http.Request) {
+	var user models.User
+	err := readJSONPayload(w, r, &user)
+	if err != nil {
+		writeJSONError(w, err, http.StatusBadRequest)
+		return
+	}
+
+	// check if user already exists
+	_, err = app.DB.GetUserByEmail(user.Email)
+	if err == nil {
+		writeJSONError(w, errors.New("user with this email already exist"), http.StatusBadRequest)
+		return
+	}
+
+	// insert user to the database
+	userId, err := app.DB.InsertUser(user)
+	if err != nil {
+		writeJSONError(w, err, http.StatusInternalServerError)
+		return
+	}
+
+	resp := JSONResponse{
+		Error:   false,
+		Message: "user created",
+		Data: struct {
+			UserId int `json:"user_id"`
+		}{userId},
+	}
+
+	writeJSONResponse(w, http.StatusCreated, resp)
+}

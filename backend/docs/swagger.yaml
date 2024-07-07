@@ -12,6 +12,40 @@ definitions:
     - error
     - message
     type: object
+  models.User:
+    properties:
+      dob:
+        example: "1995-01-21"
+        type: string
+      email:
+        example: admin@example.com
+        type: string
+      height:
+        example: 196.5
+        type: number
+      id:
+        type: integer
+      name:
+        example: John
+        type: string
+      password:
+        description: internally is stored as hash
+        example: password
+        type: string
+      patronymic:
+        example: Ivanovich
+        type: string
+      surname:
+        example: Doe
+        type: string
+      weight:
+        example: 104.5
+        type: number
+    required:
+    - email
+    - name
+    - password
+    type: object
   models.UserCredentials:
     properties:
       email:
@@ -98,6 +132,36 @@ paths:
       summary: refresh jwt token
       tags:
       - auth
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Register new user.
+      parameters:
+      - description: user data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+      summary: register user
+      tags:
+      - user
 securityDefinitions:
   ApiKeyAuth:
     in: header

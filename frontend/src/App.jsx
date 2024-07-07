@@ -21,7 +21,6 @@ const App = () => {
 			const res = await fetch(apiBase + "/refresh", requestOptions)
 			const data = await res.json();
 			if (data.data.access_token) {
-				console.log(data.data.access_token)
 				setJwtToken(data.data.access_token)
 			} else {
 				console.log("no access token found", data.message);

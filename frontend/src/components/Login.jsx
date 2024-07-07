@@ -58,6 +58,7 @@ const Login = () => {
 							onChange={(e) => setCredentials({...credentials, email: e.target.value})}
 							// TODO: change placeholder CSS
 							placeholder={"admin@example.com"}
+							required={true}
 						/>
 						<Input
 							title={"Password"}
@@ -68,6 +69,7 @@ const Login = () => {
 							onChange={(e) => setCredentials({...credentials, password: e.target.value})}
 							// TODO: change placeholder CSS
 							placeholder={"password"}
+							required={true}
 						/>
 						<input
 							type={"submit"}
