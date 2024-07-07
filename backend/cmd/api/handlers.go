@@ -147,7 +147,7 @@ func (app *App) RefreshToken(w http.ResponseWriter, r *http.Request) {
 // @Success 202 {object} JSONResponse
 // @Router /logout [get]
 func (app *App) Logout(w http.ResponseWriter, r *http.Request) {
-	w.Header().Add("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
 	http.SetCookie(w, app.Auth.GetExpiredRefreshCookie())
 
 	resp := JSONResponse{
