@@ -63,6 +63,11 @@ const docTemplate = `{
         },
         "/logout": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Logout and remove refresh token from cookie storage.",
                 "produces": [
                     "application/json"
@@ -151,13 +156,20 @@ const docTemplate = `{
                 }
             }
         }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
     }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "0.0.0",
-	Host:             "",
+	Host:             "localhost:8888",
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "Workout Tracker",

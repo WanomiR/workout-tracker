@@ -22,7 +22,12 @@ type App struct {
 // @version 0.0.0
 // @description Service for keeping track of your training progress.
 
+// @host localhost:8888
 // @BasePath /
+
+// @securityDefinitions.apiKey ApiKeyAuth
+// @in header
+// @name Authorization
 func main() {
 	err := godotenv.Load()
 	if err != nil {

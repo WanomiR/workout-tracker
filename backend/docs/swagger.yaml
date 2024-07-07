@@ -25,6 +25,7 @@ definitions:
     - email
     - password
     type: object
+host: localhost:8888
 info:
   contact: {}
   description: Service for keeping track of your training progress.
@@ -71,6 +72,8 @@ paths:
           description: Accepted
           schema:
             $ref: '#/definitions/main.JSONResponse'
+      security:
+      - ApiKeyAuth: []
       summary: logout
       tags:
       - auth
@@ -95,4 +98,9 @@ paths:
       summary: refresh jwt token
       tags:
       - auth
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

@@ -30,7 +30,7 @@ func (app *App) Home(w http.ResponseWriter, r *http.Request) {
 // @Failure 400,500 {object} JSONResponse
 // @Router /authenticate [post]
 func (app *App) Authenticate(w http.ResponseWriter, r *http.Request) {
-	w.Header().Add("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
 
 	var payload models.UserCredentials
 	err := readJSONPayload(w, r, &payload)
@@ -42,14 +42,14 @@ func (app *App) Authenticate(w http.ResponseWriter, r *http.Request) {
 	// validate user against database
 	user, err := app.DB.GetUserByEmail(payload.Email)
 	if err != nil {
-		writeJSONError(w, err, http.StatusBadRequest)
+		writeJSONError(w, errors.New("invalid credentials"), http.StatusBadRequest)
 		return
 	}
 
 	// check password
 	valid, err := passwordMatches(user.Password, payload.Password)
 	if err != nil || !valid {
-		writeJSONError(w, errors.New("invalid credentials password"), http.StatusBadRequest)
+		writeJSONError(w, errors.New("invalid credentials"), http.StatusBadRequest)
 		return
 	}
 
@@ -89,7 +89,7 @@ func (app *App) Authenticate(w http.ResponseWriter, r *http.Request) {
 // @Failure 401,500 {object} JSONResponse
 // @Router /refresh [get]
 func (app *App) RefreshToken(w http.ResponseWriter, r *http.Request) {
-	w.Header().Add("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
 
 	for _, cookie := range r.Cookies() {
 		if cookie.Name == app.Auth.CookieName {
@@ -140,6 +140,7 @@ func (app *App) RefreshToken(w http.ResponseWriter, r *http.Request) {
 
 // Logout godoc
 // @Summary logout
+// @Security ApiKeyAuth
 // @Description Logout and remove refresh token from cookie storage.
 // @Tags auth
 // @Produce json

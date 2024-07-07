@@ -6,6 +6,7 @@
         "contact": {},
         "version": "0.0.0"
     },
+    "host": "localhost:8888",
     "basePath": "/",
     "paths": {
         "/authenticate": {
@@ -56,6 +57,11 @@
         },
         "/logout": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Logout and remove refresh token from cookie storage.",
                 "produces": [
                     "application/json"
@@ -143,6 +149,13 @@
                     "example": "password"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }

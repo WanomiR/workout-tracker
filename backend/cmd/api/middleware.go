@@ -16,13 +16,13 @@ func (app *App) enableCORS(next http.Handler) http.Handler {
 	})
 }
 
-//func (app *App) requireAuthentication(next http.Handler) http.Handler {
-//	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-//		_, _, err := app.Auth.GetTokenFromHeaderAndVerify(w, r)
-//		if err != nil {
-//			writeJSONError(w, err, http.StatusUnauthorized)
-//			return
-//		}
-//		next.ServeHTTP(w, r)
-//	})
-//}
+func (app *App) requireAuthentication(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		_, _, err := app.Auth.GetTokenFromHeaderAndVerify(w, r)
+		if err != nil {
+			writeJSONError(w, err, http.StatusUnauthorized)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}

@@ -18,6 +18,14 @@ func (app *App) Routes() http.Handler {
 	mux.Get("/refresh", app.RefreshToken)
 	mux.Get("/logout", app.Logout)
 
+	// TODO:
+	//  - protect all other routes
+	//  - add StatusUnauthorized to all handlers' swagger
+	mux.Route("/tracker", func(mux chi.Router) {
+		mux.Use(app.requireAuthentication)
+
+	})
+
 	mux.Get("/", app.Home)
 
 	mux.Get("/swagger/*", httpSwagger.Handler(
