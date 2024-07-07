@@ -5,14 +5,18 @@ import App from './App.jsx'
 import * as cmp from './components/components.js'
 import './index.css'
 
-const apiUrlBase = 'http://localhost:8888/api'
+const apiBase = 'http://localhost:8888'
 
 const router = createBrowserRouter([
    {
       path: '/',
       element: <App />,
       errorElement: <cmp.ErrorPage />,
-      children: [],
+      children: [
+         {index: true, element: <cmp.Dashboard />},
+         {path: "/register", element: <cmp.Register />},
+         {path: "/login", element: <cmp.Login />},
+      ],
    },
 ])
 
@@ -22,4 +26,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   </React.StrictMode>,
 )
 
-export default apiUrlBase
+export default apiBase

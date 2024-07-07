@@ -1,9 +1,170 @@
 basePath: /
+definitions:
+  main.JSONResponse:
+    properties:
+      data:
+        description: any is an alias for interface{}
+      error:
+        type: boolean
+      message:
+        type: string
+    required:
+    - error
+    - message
+    type: object
+  models.User:
+    properties:
+      dob:
+        example: "1995-01-21"
+        type: string
+      email:
+        example: admin@example.com
+        type: string
+      height:
+        example: 196.5
+        type: number
+      id:
+        type: integer
+      name:
+        example: John
+        type: string
+      password:
+        description: internally is stored as hash
+        example: password
+        type: string
+      patronymic:
+        example: Ivanovich
+        type: string
+      surname:
+        example: Doe
+        type: string
+      weight:
+        example: 104.5
+        type: number
+    required:
+    - email
+    - name
+    - password
+    type: object
+  models.UserCredentials:
+    properties:
+      email:
+        example: admin@example.com
+        type: string
+      password:
+        description: internally is stored as hash
+        example: password
+        type: string
+    required:
+    - email
+    - password
+    type: object
 host: localhost:8888
 info:
   contact: {}
-  description: Service for keeping track of your workouts.
+  description: Service for keeping track of your training progress.
   title: Workout Tracker
   version: 0.0.0
-paths: {}
+paths:
+  /authenticate:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user by email address and password.
+      parameters:
+      - description: User credentials
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserCredentials'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+      summary: authenticate user
+      tags:
+      - auth
+  /logout:
+    get:
+      description: Logout and remove refresh token from cookie storage.
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: logout
+      tags:
+      - auth
+  /refresh:
+    get:
+      description: Refresh JWT token.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+      summary: refresh jwt token
+      tags:
+      - auth
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Register new user.
+      parameters:
+      - description: user data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.JSONResponse'
+      summary: register user
+      tags:
+      - user
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"
