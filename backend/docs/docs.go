@@ -204,9 +204,6 @@ const docTemplate = `{
                     "type": "number",
                     "example": 196.5
                 },
-                "id": {
-                    "type": "integer"
-                },
                 "name": {
                     "type": "string",
                     "example": "John"

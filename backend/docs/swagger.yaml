@@ -23,8 +23,6 @@ definitions:
       height:
         example: 196.5
         type: number
-      id:
-        type: integer
       name:
         example: John
         type: string
